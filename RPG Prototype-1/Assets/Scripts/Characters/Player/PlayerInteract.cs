@@ -20,7 +20,7 @@ public class Interact : MonoBehaviour
         if (Input.GetButtonDown(INTERACT))
         {
             // Are they near an item that they can pick up? interactPickup();
-            if (null) {}
+            if (true) {}
             // Are they near a door or container? => interactOpen();
             // Are they near an NPC? interactSpeak();
         }
