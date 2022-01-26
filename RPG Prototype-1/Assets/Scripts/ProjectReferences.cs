@@ -4,7 +4,7 @@ using UnityEngine;
 
 // These are global vars that may need to be updated across the entire project. This makes future edits easier hopefully.
 
-public static class ProjectReferences : MonoBehaviour
+public static class ProjectReferences
 {
     // Game Object Refs
     private static string PLAYER_OBJECT = "Player";
@@ -20,12 +20,16 @@ public static class ProjectReferences : MonoBehaviour
 
     public static string getTag(string s)
     {
-        if (s.ToLower() = "player") {return PLAYER_OBJECT;}
-        else if (s.ToLower() = "ground") {return GROUND_TAG;}
-        else if (s.ToLower() = "jump") {return JUMP_TAG;}
-        else if (s.ToLower() = "horizontal") {return HORZ_AXIS;}
-        else if (s.ToLower() = "vertical") {return VERT_AXIS;}
-        else if (s.ToLower() = "sprint") {return SPRINT_BUTTON;}
-        else Debug.Error("Tag requested was not valid. Error in call to ProjectReferences.cs"); // Add extra tags above here
+        if (s.ToLower() == "player") {return PLAYER_OBJECT;}
+        else if (s.ToLower() == "ground") {return GROUND_TAG;}
+        else if (s.ToLower() == "jump") {return JUMP_BUTTON;}
+        else if (s.ToLower() == "horizontal") {return HORZ_AXIS;}
+        else if (s.ToLower() == "vertical") {return VERT_AXIS;}
+        else if (s.ToLower() == "sprint") {return SPRINT_BUTTON;}
+        else  // Add extra tags above here
+        {
+            Debug.Log("Tag requested was not valid. Error in call to ProjectReferences.cs");
+            return "ERROR";
+        }
     }
 }
