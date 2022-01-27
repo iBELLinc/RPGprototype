@@ -56,12 +56,11 @@ public class Interactable : MonoBehaviour
         }
     }
 
+    // Alters the prompt to display the proper text depending on the applicable child class for the object
     protected void displayPrompt(int i)
     {
-        Debug.Log("Inside displayPrompt");
+        //Debug.Log("Inside displayPrompt");
         pickupText.SetActive(true);
-        pickupText.GetComponent<Text>().text = PROMPT + INTERACTION_TYPE[interactIndex] + this.GetType().Name;
-// Trying to edit the text inside of the Interaction Text Game Object. Let the object maintain it's settings and edit/enable-disable during game.
-        
+        pickupText.GetComponent<Text>().text = PROMPT + INTERACTION_TYPE[interactIndex] + this.GetType().Name;        
     }
 }

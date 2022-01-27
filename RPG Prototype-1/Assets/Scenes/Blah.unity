@@ -281,7 +281,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   interactionRadius: 5
-  debugMode: 1
+  debugMode: 0
   OBJECT_NAME: 
   player: {fileID: 0}
 --- !u!1 &1847060257
