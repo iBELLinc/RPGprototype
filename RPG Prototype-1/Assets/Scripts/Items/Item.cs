@@ -6,15 +6,16 @@ public class Item : Interactable
 {
     
     // Start is called before the first frame update
-    void Start()
+    protected void Awake()
     {
-        
+        base.Awake();
+        this.interactIndex = 0;
     }
 
     // Update is called once per frame
-    void Update()
+    protected void Update()
     {
-        
+        base.Update();
     }
 
 }
