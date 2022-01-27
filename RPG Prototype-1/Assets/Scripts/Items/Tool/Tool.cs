@@ -5,14 +5,14 @@ using UnityEngine;
 public class Tool : Item
 {
     // Start is called before the first frame update
-    void Start()
+    protected void Awake()
     {
-        
+        base.Awake();
     }
 
     // Update is called once per frame
-    void Update()
+    protected void Update()
     {
-        
+        base.Update();
     }
 }

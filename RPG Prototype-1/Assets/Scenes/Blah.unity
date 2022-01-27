@@ -202,6 +202,24 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 780789797}
   m_CullTransparentMesh: 1
+--- !u!1 &905858777 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5286816041974476171, guid: 9e462f60f1923ec4d93678823ce1c15a, type: 3}
+  m_PrefabInstance: {fileID: 1438168232}
+  m_PrefabAsset: {fileID: 0}
+--- !u!135 &905858778
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 905858777}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.7
+  m_Center: {x: 0, y: 0.000000059604645, z: 0}
 --- !u!1001 &1438168232
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -277,12 +295,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1446107768}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 303b732fb6777af449652a4f7d5e633e, type: 3}
+  m_Script: {fileID: 11500000, guid: 0ec0941a5168a9a468008559794825a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactionRadius: 5
   debugMode: 0
   OBJECT_NAME: 
+  interactionRadius: 5
   player: {fileID: 0}
 --- !u!1 &1847060257
 GameObject:

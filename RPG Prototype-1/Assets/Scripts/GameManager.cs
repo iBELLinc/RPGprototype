@@ -4,7 +4,7 @@ using UnityEngine;
 
 // These are global vars that may need to be updated across the entire project. This makes future edits easier hopefully.
 // DO NOT ALTER THESE VALUES IN OTHER SCRIPTS ! ! !
-public class ProjectReferences : MonoBehaviour
+public class GameManager : MonoBehaviour
 {
     // Game Object Refs
     public readonly string PLAYER_OBJECT = "Player";
