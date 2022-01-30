@@ -15,4 +15,10 @@ public class Tool : Item
     {
         base.Update();
     }
+
+    protected void equipTool ()
+    {
+        // If no space is available to equip then attempt to stash tool
+    }
+    protected void stashTool () {}
 }
