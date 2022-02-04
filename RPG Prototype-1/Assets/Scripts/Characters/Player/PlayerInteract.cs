@@ -7,10 +7,13 @@ using UnityEngine.UI;
 public class PlayerInteract : MonoBehaviour
 {
     [SerializeField] private bool debugMode = false;
+    private bool calculating = false;
     [SerializeField] private int interactionRadius = 5;
     private GameObject interactFocus; // This is the interactable object that is closest to the player
+    private GameObject ItemsOnGround;
     
     private string INTERACTABLE = "Interactable";
+    private string INTERACT = "Interact";
 
     protected string PLAYER_OBJECT = "Player";
     protected string INTERACTIONTEXT_TAG = "Interaction Text";
@@ -26,6 +29,7 @@ public class PlayerInteract : MonoBehaviour
     {
         // Collect necessary refs and disable prompt in HUD for gameplay start
         player = GameObject.FindWithTag(PLAYER_OBJECT).transform;
+        ItemsOnGround = GameObject.Find("ItemsOnGround");
         pickupText = GameObject.FindWithTag(INTERACTIONTEXT_TAG);
         pickupText.SetActive(false);
     }
@@ -34,14 +38,18 @@ public class PlayerInteract : MonoBehaviour
     // Activates when player interaction collider collides with an object
     void OnTriggerEnter (Collider other)
     {
-        // Add object to nearby objects list
-        if (other.tag == INTERACTABLE)
+        // Add object to nearby-objects list for distance checks
+        if (other.tag == INTERACTABLE && other.gameObject.transform.IsChildOf(ItemsOnGround.transform))
         {
             objectsInRange.Add(other.gameObject);
+            if (debugMode) {Debug.Log("Added Object. Current number of objects in list: " + objectsInRange.Count.ToString());}
+
         }
-        if (other.tag == INTERACTABLE && interactFocus == null)
+        // If no other objects are in list then set focus on this object immediately
+        if (other.tag == INTERACTABLE && interactFocus == null && other.gameObject.transform.IsChildOf(ItemsOnGround.transform))
         {
             interactFocus = other.gameObject;
+            if (debugMode) {Debug.Log("Updated focus to: " + interactFocus.name);}
             updatePrompt();
         }
     }
@@ -50,10 +58,11 @@ public class PlayerInteract : MonoBehaviour
     // If focus is null and another obj is currently in radius then display prompt for that item
     void OnTriggerStay (Collider other)
     {
-        if (other.tag == INTERACTABLE && objectsInRange.Count > 0)
+        if (!calculating && other.tag == INTERACTABLE && objectsInRange.Count > 0 && other.gameObject.transform.IsChildOf(ItemsOnGround.transform))
         {
+            calculating = true;
             GameObject previousFocus = interactFocus; // Save the previous interactFocus for comparison
-            float closestDistance = 0;
+            float closestDistance = interactionRadius + 1; // Default value 1 beyond pickup radius to prevent calculation issues
 
             // Do distance calc
             for (int i = 0; i < objectsInRange.Count; i++)
@@ -77,6 +86,7 @@ public class PlayerInteract : MonoBehaviour
                 Debug.Log("Current number of objects in list: " + objectsInRange.Count.ToString());
                 for (int i = 0; i < objectsInRange.Count; i++) {Debug.Log("Interactable Objects List: " + objectsInRange[i]);}
             }
+            calculating = false;
         }
     }
 
@@ -97,15 +107,32 @@ public class PlayerInteract : MonoBehaviour
             interactFocus = null; // Clear interactFocus
         }
 
-        if (debugMode) {Debug.Log("Current number of objects in list: " + objectsInRange.Count.ToString());}
+        if (debugMode) {Debug.Log("Removed Object. Current number of objects in list: " + objectsInRange.Count.ToString());}
     }
 
 
     // Update is called once per frame
     void Update()
     {
-        // If player presses E run appropriate method for focused object
-        //if (Input.GetButtonDown(INTERACT)) {}
+        // If player is near an object and they press the interact button
+        if (interactFocus != null && Input.GetButtonDown(INTERACT))
+        {
+            // get interact index and run appropriate method
+            Interactable objectScript = (Interactable) interactFocus.GetComponent(typeof(Interactable));
+            int index = objectScript.getInteractIndex();
+
+
+// This will determine where the program moves when player tries to interact with object
+            switch (index)
+            {
+                case 0: // Item
+                    interactPickup();
+                    break;
+                default:
+                    Debug.LogError("Focused object does not have a valid interaction index!");
+                    break;
+            }
+        }
     }
 
 
@@ -122,10 +149,16 @@ public class PlayerInteract : MonoBehaviour
     // Player picks up item
     private void interactPickup()
     {
-        // Send call to PickupController script for handling
+        Debug.Log("Picking up item.");
+        
+        // Get needed object data
+        // Place object 2D in tool slot or inventory
+        // Remove object from world space and place it in the Player game object hierarchy
+            // Run functions from ExitTrigger script to remove object from list
+        // Orient the object so it appears the player is holding it
     }
 
-    // Player opens a container or body
+    // Player loots a container or body
     private void interactLoot() {}
     // Player enters a location
     private void interactEnter() {}
