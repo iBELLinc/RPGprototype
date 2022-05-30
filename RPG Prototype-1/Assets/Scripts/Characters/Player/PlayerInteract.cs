@@ -22,6 +22,7 @@ public class PlayerInteract : MonoBehaviour
     protected string[] INTERACTION_TYPE = new string[] {"pick up ","loot ", "enter " ,"speak to "};
     public Transform player;
     protected GameObject pickupText;
+    private GameObject toolbelt;
     private List<GameObject> objectsInRange = new List<GameObject>(); // Tracks current nearby objects to calculate distances
 
     // Start is called before the first frame update
@@ -30,6 +31,7 @@ public class PlayerInteract : MonoBehaviour
         // Collect necessary refs and disable prompt in HUD for gameplay start
         player = GameObject.FindWithTag(PLAYER_OBJECT).transform;
         ItemsOnGround = GameObject.Find("ItemsOnGround");
+        toolbelt = GameObject.Find("equiped_items");
         pickupText = GameObject.FindWithTag(INTERACTIONTEXT_TAG);
         pickupText.SetActive(false);
     }
@@ -88,6 +90,10 @@ public class PlayerInteract : MonoBehaviour
             }
             calculating = false;
         }
+        if (debugMode)
+        {
+            Debug.Log("Current number of objects in list: " + objectsInRange.Count.ToString());
+        }
     }
 
 
@@ -101,7 +107,7 @@ public class PlayerInteract : MonoBehaviour
         }
 
         // If no objects nearby then remove prompt and clear interactFocus var
-        if (objectsInRange.Count == 0)
+        if (objectsInRange.Count < 1)
         {
             pickupText.SetActive(false); // Disable prompt
             interactFocus = null; // Clear interactFocus
@@ -129,7 +135,7 @@ public class PlayerInteract : MonoBehaviour
                     interactPickup();
                     break;
                 default:
-                    Debug.LogError("Focused object does not have a valid interaction index!");
+                    if(debugMode){Debug.LogError("Focused object does not have a valid interaction index!");}
                     break;
             }
         }
@@ -149,13 +155,26 @@ public class PlayerInteract : MonoBehaviour
     // Player picks up item
     private void interactPickup()
     {
-        Debug.Log("Picking up item.");
+        if(debugMode){Debug.Log("Picking up item.");}
+
+        // Save picked up object's pointer
+        GameObject itemPickedUp = interactFocus;
+
+        // Calls to inventoryManager
         
-        // Get needed object data
-        // Place object 2D in tool slot or inventory
         // Remove object from world space and place it in the Player game object hierarchy
+        itemPickedUp.transform.SetParent(toolbelt.transform);
             // Run functions from ExitTrigger script to remove object from list
-        // Orient the object so it appears the player is holding it
+        objectsInRange.Remove(interactFocus.gameObject);
+        if (objectsInRange.Count < 1)
+        {
+            interactFocus = null;
+            pickupText.SetActive(false);
+        }
+
+        /// Send call to inventoryManager to handle the rest
+        InventoryManager im = new InventoryManager();
+        im.pickUpObject(itemPickedUp);
     }
 
     // Player loots a container or body

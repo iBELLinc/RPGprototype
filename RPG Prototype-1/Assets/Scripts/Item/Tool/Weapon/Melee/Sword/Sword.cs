@@ -2,17 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Sword : MonoBehaviour
+public class Sword : Melee
 {
-    // Start is called before the first frame update
-    void Start()
+    protected void Awake()
     {
-        
+        base.Awake();
     }
 
     // Update is called once per frame
-    void Update()
+    protected void Update()
     {
-        
+        base.Update();
     }
 }
