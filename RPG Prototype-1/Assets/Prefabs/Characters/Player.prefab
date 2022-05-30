@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 5639665108003651397}
   - component: {fileID: 5639665108003651393}
   - component: {fileID: 5352029473122376373}
+  - component: {fileID: 7466360693580885251}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -125,10 +126,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36de1d59adb7fe941bf934b44f93c047, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveForce: 10
   jumpForce: 11
-  maxVelocity: 22
   rotationSpeed: 100
-  Rotatedamping: 5
-  tiltAngle: 60
-  myBody: {fileID: 5639665108003651393}
+  sprintMultiplier: 2
+  playerSpeed: 10
+  fallMultiplier: 4
+  lowJumpMultiplier: 3
+  isGrounded: 1
+--- !u!114 &7466360693580885251
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5639665108003651398}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97edeb25e292ec04cb08b5239da502be, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  debugMode: 0
+  interactionRadius: 5
+  player: {fileID: 0}
